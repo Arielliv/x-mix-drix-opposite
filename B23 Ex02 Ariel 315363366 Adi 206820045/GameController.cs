@@ -4,12 +4,22 @@
     {
         private Player[] m_Players = new Player[2];
         private Game m_ActiveGame;
-        private UserInterface m_UserInterface;
 
         public void PlayGame()
         {
-            UserInterface.WaitForUserInput();
+            int gridSize = UserInterface.GetGridSize();
+            eGameMode gameMode = UserInterface.GetGameMode();
+            this.m_ActiveGame = new Game(gridSize);
+            ConsoleInterface.ShowGameGrid(this.m_ActiveGame.Grid);
+
+
+
+
+
+            ConsoleInterface.WaitForUserInput();
+
         }
+
 
     }
 }

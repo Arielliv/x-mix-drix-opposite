@@ -8,9 +8,9 @@
 
     public enum eMark
     {
-        X,
-        O,
-        Empty
+        X = 'X',
+        O = 'O',
+        Empty = ' '
     }
 
     class Player

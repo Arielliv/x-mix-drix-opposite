@@ -1,12 +1,12 @@
 ﻿namespace B23_Ex02_Ariel_315363366_Adi_206820045
 {
-    struct Cell
+    public struct Cell
     {
         private eMark m_Mark;
 
-        public Cell(eMark mark = eMark.Empty)
+        public Cell(eMark i_Mark) 
         {
-           this.m_Mark = mark;
+            this.m_Mark = i_Mark;
         }
 
         public eMark Mark
