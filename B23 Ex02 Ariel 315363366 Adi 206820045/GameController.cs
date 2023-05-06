@@ -25,12 +25,6 @@ namespace B23_Ex02_Ariel_315363366_Adi_206820045
             int gridSize = UserInterface.GetGridSize();
             if (gridSize != -1)
             {
-                int leftoverMovesCount = gridSize * gridSize;
-                bool isNextMoveValid = false;
-                bool isVictory = false;
-                int[] nextMove = null;
-                int activePlayerIndexInPlayersArray = 0;
-
                 eGameMode gameMode = UserInterface.GetGameMode();
                 this.setPlayers(gameMode);
                 this.m_ActiveGame = new Game(gridSize);
