@@ -19,6 +19,17 @@
         private eMark m_mark;
         private int m_score = 0;
 
+        public eMark Mark
+        {
+            get { return this.m_mark; }
+            set { this.m_mark = value; }
+        }
+
+        public int Score
+        {
+            get { return this.m_score; }
+            set { this.m_score = value; }
+        }
         public Player(ePlayerType i_type, eMark i_mark)
         {
             this.m_type = i_type;

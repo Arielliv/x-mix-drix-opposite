@@ -27,5 +27,15 @@
         {
             return this.gridMatrix[i_X, i_Y].Mark;
         }
+
+        public bool isCellEmpty(int i_X, int i_Y)
+        {
+            return this.gridMatrix[i_X, i_Y].IsEmpty();
+        }
+
+        public void setCellMark(int i_X, int i_Y, eMark i_NewMark) 
+        {
+            this.gridMatrix[i_X, i_Y].Mark = i_NewMark;
+        }
     }
 }

@@ -13,7 +13,12 @@ namespace B23_Ex02_Ariel_315363366_Adi_206820045
             gridSizeInput = ConsoleInterface.GetGridSize();
             while (!isValidGridSizeInput)
             {
-                if (int.TryParse(gridSizeInput, out gridSize) && gridSize >= 3 && gridSize <= 9)
+                if (gridSizeInput.Equals("Q"))
+                {
+                    isValidGridSizeInput = true;
+                    gridSize = -1;
+                }
+                else if (int.TryParse(gridSizeInput, out gridSize) && gridSize >= 3 && gridSize <= 9)
                 {
                     isValidGridSizeInput = true;
                 }
@@ -53,13 +58,28 @@ namespace B23_Ex02_Ariel_315363366_Adi_206820045
         {
             int x = 0;
             int y = 0;
+            int[] result = null;
 
             ConsoleInterface.GetLineNumber();
             x = getCellIndex(gridSize);
-            ConsoleInterface.GetColumnNumber();
-            y = getCellIndex(gridSize);
+            if(x == -1)
+            {
+                result = new int[] { x };
+            }
+            else {
+                ConsoleInterface.GetColumnNumber();
+                y = getCellIndex(gridSize);
+                if (y == -1)
+                {
+                    result = new int[] { y };
+                } else
+                {
+                    result = new int[] { x - 1, y - 1 };
+                }
+                    
+            } 
 
-            return new int[] {x,y};
+            return result;
         }
 
         private static int getCellIndex (int gridSize) {
@@ -71,7 +91,12 @@ namespace B23_Ex02_Ariel_315363366_Adi_206820045
 
             while (!isValidInputValue)
             {
-                if (int.TryParse(inputValue, out cellIndex) && cellIndex >= 1 && cellIndex <= gridSize)
+                if(inputValue.Equals("Q"))
+                {
+                    isValidInputValue = true;
+                    cellIndex = -1;
+                }
+                else if (int.TryParse(inputValue, out cellIndex))
                 {
                     isValidInputValue = true;
                 }

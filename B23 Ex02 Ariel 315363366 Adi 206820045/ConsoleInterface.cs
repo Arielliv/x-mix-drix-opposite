@@ -1,4 +1,6 @@
 ﻿using System;
+using Ex02.ConsoleUtils;
+
 namespace B23_Ex02_Ariel_315363366_Adi_206820045
 {
     class ConsoleInterface
@@ -37,6 +39,7 @@ namespace B23_Ex02_Ariel_315363366_Adi_206820045
         {
             int gridSize = i_GameGrid.getGridSize();
 
+            Screen.Clear();
             showGameGridHeader(gridSize);
             for (int x = 0; x < gridSize; x++)
             {
@@ -83,10 +86,33 @@ namespace B23_Ex02_Ariel_315363366_Adi_206820045
             Console.Write("Please enter the column number: ");
         }
 
+        public static void ShowMessageWhenInvalidCellIndex(int gridSize)
+        {
+            Console.Write($"You've entered invalid input, please enter a number between 0 and {gridSize}: "); 
+        }
+
         public static string GetCellIndexWhenInvalid(int gridSize)
         {
-            Console.Write($"You've entered invalid input, please enter a number between 0 and {gridSize}: ");
+            ShowMessageWhenInvalidCellIndex(gridSize);
             return Console.ReadLine();
+        }
+
+        public static void ShowMessageWhenGameOverWithTie()
+        {
+            Console.WriteLine("The game is over with tie!");
+        }
+
+        public static void ShowMessageWhenGameOverWithWin(eMark mark)
+        {
+            Console.WriteLine($"The game is over with victory of {mark} player!");
+        }
+
+        public static void ShowMessageWithPlayersScore(Player[] players)
+        {
+            foreach(Player player in players)
+            {
+                Console.WriteLine($"{player.Mark} player's score: {player.Score}");
+            }
         }
     }
 }
