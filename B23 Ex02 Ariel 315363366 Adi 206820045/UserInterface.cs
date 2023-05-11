@@ -3,7 +3,6 @@ namespace B23_Ex02_Ariel_315363366_Adi_206820045
 {
     class UserInterface
     {
-        
         public static int GetGridSize()
         {
             int gridSize = 0;
@@ -13,12 +12,7 @@ namespace B23_Ex02_Ariel_315363366_Adi_206820045
             gridSizeInput = ConsoleInterface.GetGridSize();
             while (!isValidGridSizeInput)
             {
-                if (gridSizeInput.Equals("Q"))
-                {
-                    isValidGridSizeInput = true;
-                    gridSize = -1;
-                }
-                else if (int.TryParse(gridSizeInput, out gridSize) && gridSize >= 3 && gridSize <= 9)
+                if (int.TryParse(gridSizeInput, out gridSize) && gridSize >= 3 && gridSize <= 9)
                 {
                     isValidGridSizeInput = true;
                 }
@@ -53,45 +47,43 @@ namespace B23_Ex02_Ariel_315363366_Adi_206820045
             return gameMode;
         }
 
-
-        public static int[] GetPlayerNextMove(int gridSize)
+        public static int[] GetPlayerNextMove(int i_GridSize)
         {
             int x = 0;
             int y = 0;
             int[] result = null;
 
             ConsoleInterface.GetLineNumber();
-            x = getCellIndex(gridSize);
+            x = getCellIndex(i_GridSize);
             if(x == -1)
             {
                 result = new int[] { x };
             }
             else {
                 ConsoleInterface.GetColumnNumber();
-                y = getCellIndex(gridSize);
+                y = getCellIndex(i_GridSize);
                 if (y == -1)
                 {
                     result = new int[] { y };
-                } else
+                } 
+                else
                 {
                     result = new int[] { x - 1, y - 1 };
-                }
-                    
+                } 
             } 
 
             return result;
         }
 
-        private static int getCellIndex (int gridSize) {
+        private static int getCellIndex (int i_GridSize) {
             bool isValidInputValue = false;
             string inputValue;
             int cellIndex = 0;
 
-            inputValue = Console.ReadLine();
-
+            inputValue = ConsoleInterface.GetCellIndex();
             while (!isValidInputValue)
             {
-                if(inputValue.Equals("Q"))
+                if(inputValue.Equals(ConsoleInterface.k_QuitSign))
                 {
                     isValidInputValue = true;
                     cellIndex = -1;
@@ -102,13 +94,39 @@ namespace B23_Ex02_Ariel_315363366_Adi_206820045
                 }
                 else
                 {
-                    inputValue = ConsoleInterface.GetCellIndexWhenInvalid(gridSize);
+                    inputValue = ConsoleInterface.GetCellIndexWhenInvalid(i_GridSize);
                 }
             }
+
             return cellIndex;
         }
 
+        public static bool GetWhetherToPlayAnotherRound()
+        {
+            bool isValidAnotherRoundInput = false;
+            string shouldPlayAnotherRoundInput;
+            bool shouldPlayAnotherRound = false;
+
+            shouldPlayAnotherRoundInput = ConsoleInterface.GetWhetherToPlayAnotherRound();
+            while (!isValidAnotherRoundInput)
+            {
+                if (shouldPlayAnotherRoundInput.Equals(ConsoleInterface.k_YesSign))
+                {
+                    shouldPlayAnotherRound = true;
+                    isValidAnotherRoundInput = true;
+                }
+                else if (shouldPlayAnotherRoundInput.Equals(ConsoleInterface.k_NoSign))
+                {
+                    shouldPlayAnotherRound = false;
+                    isValidAnotherRoundInput = true;
+                }
+                else
+                {
+                    shouldPlayAnotherRoundInput = ConsoleInterface.GetWhetherToPlayAnotherRoundWhenInvalid();
+                }
+            }
+
+            return shouldPlayAnotherRound;
+        }
     }
-
-
 }

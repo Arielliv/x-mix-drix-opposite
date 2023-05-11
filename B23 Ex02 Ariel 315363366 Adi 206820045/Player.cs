@@ -6,34 +6,34 @@
         Person
     }
 
-    public enum eMark
-    {
-        X = 'X',
-        O = 'O',
-        Empty = ' '
-    }
-
     class Player
     {
-        private ePlayerType m_type;
-        private eMark m_mark;
-        private int m_score = 0;
+        private ePlayerType m_Type;
+        private eMark m_Mark;
+        private int m_Score = 0;
 
         public eMark Mark
         {
-            get { return this.m_mark; }
-            set { this.m_mark = value; }
+            get { return this.m_Mark; }
+            set { this.m_Mark = value; }
         }
 
         public int Score
         {
-            get { return this.m_score; }
-            set { this.m_score = value; }
+            get { return this.m_Score; }
+            set { this.m_Score = value; }
         }
-        public Player(ePlayerType i_type, eMark i_mark)
+
+        public ePlayerType Type
         {
-            this.m_type = i_type;
-            this.m_mark = i_mark;
+            get { return this.m_Type; }
+            set { this.m_Type = value; }
+        }
+
+        public Player(ePlayerType i_Type, eMark i_Mark)
+        {
+            this.m_Type = i_Type;
+            this.m_Mark = i_Mark;
         }
     }
 }

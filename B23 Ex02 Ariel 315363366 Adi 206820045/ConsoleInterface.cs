@@ -5,6 +5,10 @@ namespace B23_Ex02_Ariel_315363366_Adi_206820045
 {
     class ConsoleInterface
     {
+        public const string k_QuitSign = "Q";
+        public const string k_YesSign = "y";
+        public const string k_NoSign = "n";
+
         public static void WaitForUserInput()
         {
             Console.WriteLine("Press any key to continue..");
@@ -37,7 +41,7 @@ namespace B23_Ex02_Ariel_315363366_Adi_206820045
 
         public static void ShowGameGrid(Grid i_GameGrid)
         {
-            int gridSize = i_GameGrid.getGridSize();
+            int gridSize = i_GameGrid.GetGridSize();
 
             Screen.Clear();
             showGameGridHeader(gridSize);
@@ -46,7 +50,7 @@ namespace B23_Ex02_Ariel_315363366_Adi_206820045
                 Console.Write($"{x + 1}");
                 for (int y = 0; y < gridSize; y++)
                 {
-                    showCellContent(i_GameGrid.getCellContent(x, y));
+                    showCellContent(i_GameGrid.GetCellContent(x, y));
                 }
 
                 Console.WriteLine("|");
@@ -60,10 +64,10 @@ namespace B23_Ex02_Ariel_315363366_Adi_206820045
             }
         }
 
-        private static void showGameGridHeader(int gridSize)
+        private static void showGameGridHeader(int i_GridSize)
         {
             Console.Write("  ");
-            for (int i = 0; i < gridSize; i++)
+            for (int i = 0; i < i_GridSize; i++)
             {
                 Console.Write($"{i + 1}   ");
             }
@@ -71,9 +75,9 @@ namespace B23_Ex02_Ariel_315363366_Adi_206820045
             Console.WriteLine();
         }
 
-        private static void showCellContent(eMark cellContent)
+        private static void showCellContent(eMark i_CellContent)
         {
-            Console.Write($"| {(char)cellContent} ");
+            Console.Write($"| {(char)i_CellContent} ");
         }
 
         public static void GetLineNumber()
@@ -86,14 +90,14 @@ namespace B23_Ex02_Ariel_315363366_Adi_206820045
             Console.Write("Please enter the column number: ");
         }
 
-        public static void ShowMessageWhenInvalidCellIndex(int gridSize)
+        public static void ShowMessageWhenInvalidCellIndex(int i_GridSize)
         {
-            Console.Write($"You've entered invalid input, please enter a number between 0 and {gridSize}: "); 
+            Console.WriteLine($"You've entered invalid input, please enter a number between 1 and {i_GridSize}."); 
         }
 
-        public static string GetCellIndexWhenInvalid(int gridSize)
+        public static string GetCellIndexWhenInvalid(int i_GridSize)
         {
-            ShowMessageWhenInvalidCellIndex(gridSize);
+            ShowMessageWhenInvalidCellIndex(i_GridSize);
             return Console.ReadLine();
         }
 
@@ -102,17 +106,39 @@ namespace B23_Ex02_Ariel_315363366_Adi_206820045
             Console.WriteLine("The game is over with tie!");
         }
 
-        public static void ShowMessageWhenGameOverWithWin(eMark mark)
+        public static void ShowMessageWhenGameOverWithWin(eMark i_Mark)
         {
-            Console.WriteLine($"The game is over with victory of {mark} player!");
+            Console.WriteLine($"The game is over with victory of {i_Mark} player!");
         }
 
-        public static void ShowMessageWithPlayersScore(Player[] players)
+        public static void ShowMessageWithPlayersScore(Player[] i_Players)
         {
-            foreach(Player player in players)
+            foreach(Player player in i_Players)
             {
                 Console.WriteLine($"{player.Mark} player's score: {player.Score}");
             }
+        }
+
+        public static string GetWhetherToPlayAnotherRound()
+        {
+            Console.WriteLine("Would you like to play another round? \npress n for No \npress y for Yes: ");
+            return Console.ReadLine();
+        }
+
+        public static void ShowMessageWhenInvalidInputForWhetherToPlayAnotherRound()
+        {
+            Console.Write("You've entered invalid input, \npress n for No \npress y for Yes:");
+        }
+
+        public static string GetWhetherToPlayAnotherRoundWhenInvalid()
+        {
+            ShowMessageWhenInvalidInputForWhetherToPlayAnotherRound();
+            return Console.ReadLine();
+        }
+
+        public static string GetCellIndex()
+        {
+            return Console.ReadLine();
         }
     }
 }
