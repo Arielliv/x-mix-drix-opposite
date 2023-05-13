@@ -4,8 +4,8 @@
     {
         public static void Main()
         {
-            GameController gameController = new GameController();
-            gameController.PlayGame();
+            UserInterface userInterface = new UserInterface();
+            userInterface.StartGamesSession();
         }
     }
 }

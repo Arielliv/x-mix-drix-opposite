@@ -37,12 +37,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cell.cs" />
-    <Compile Include="ConsoleInterface.cs" />
+    <Compile Include="ConsoleUtils.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameController.cs" />
+    <Compile Include="GameSettingsValidators.cs" />
     <Compile Include="Grid.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="UserInputUtils.cs" />
     <Compile Include="UserInterface.cs" />
   </ItemGroup>
   <ItemGroup>

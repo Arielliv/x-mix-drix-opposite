@@ -3,7 +3,7 @@ using Ex02.ConsoleUtils;
 
 namespace B23_Ex02_Ariel_315363366_Adi_206820045
 {
-    class ConsoleInterface
+    class ConsoleUtils
     {
         public const string k_QuitSign = "Q";
         public const string k_YesSign = "y";
@@ -75,7 +75,7 @@ namespace B23_Ex02_Ariel_315363366_Adi_206820045
             Console.WriteLine();
         }
 
-        private static void showCellContent(eMark i_CellContent)
+        private static void showCellContent(eMarks i_CellContent)
         {
             Console.Write($"| {(char)i_CellContent} ");
         }
@@ -106,7 +106,7 @@ namespace B23_Ex02_Ariel_315363366_Adi_206820045
             Console.WriteLine("The game is over with tie!");
         }
 
-        public static void ShowMessageWhenGameOverWithWin(eMark i_Mark)
+        public static void ShowMessageWhenGameOverWithWin(eMarks i_Mark)
         {
             Console.WriteLine($"The game is over with victory of {i_Mark} player!");
         }

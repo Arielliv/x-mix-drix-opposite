@@ -1,6 +1,6 @@
 ﻿namespace B23_Ex02_Ariel_315363366_Adi_206820045
 {
-    public enum eMark
+    public enum eMarks
     {
         X = 'X',
         O = 'O',
@@ -9,22 +9,22 @@
 
     public struct Cell
     {
-        private eMark m_Mark;
+        private eMarks m_Mark;
 
-        public eMark Mark
+        public eMarks Mark
         {
             get { return m_Mark; }
             set { m_Mark = value; }
         }
 
-        public Cell(eMark i_Mark) 
+        public Cell(eMarks i_Mark) 
         {
             this.m_Mark = i_Mark;
         }
 
         public bool IsEmpty()
         {
-            return this.m_Mark == eMark.Empty;
+            return this.m_Mark == eMarks.Empty;
         }
     }
 }

@@ -4,6 +4,8 @@
     {
         private Cell[,] m_GridMatrix;
         private int m_AmountOfAvailableCells;
+        public const int k_MinGridSize = 3;
+        public const int k_MaxGridSize = 9;
 
         public int AmountOfAvialibleCell
         {
@@ -18,7 +20,7 @@
             {
                 for (int y = 0; y < i_Size; y++)
                 {
-                    this.m_GridMatrix[x, y].Mark = eMark.Empty;
+                    this.m_GridMatrix[x, y].Mark = eMarks.Empty;
                 }
             }
         }
@@ -28,7 +30,7 @@
             return this.m_GridMatrix.GetLength(0);
         }
 
-        public eMark GetCellContent(int i_X, int i_Y)
+        public eMarks GetCellContent(int i_X, int i_Y)
         {
             return this.m_GridMatrix[i_X, i_Y].Mark;
         }
@@ -38,10 +40,19 @@
             return this.m_GridMatrix[i_X, i_Y].IsEmpty();
         }
 
-        public void SetCellMark(int i_X, int i_Y, eMark i_NewMark) 
+        public void SetCellMark(int i_X, int i_Y, eMarks i_NewMark) 
         {
             this.m_GridMatrix[i_X, i_Y].Mark = i_NewMark;
             this.m_AmountOfAvailableCells--;
+        }
+
+        public bool IsNextMoveValid(int i_X, int i_Y)
+        {
+            int gridSize = this.GetGridSize();
+
+            return i_X < gridSize && i_X >= 0
+                && i_Y < gridSize && i_Y >= 0
+                && this.IsCellEmpty(i_X, i_Y);
         }
     }
 }

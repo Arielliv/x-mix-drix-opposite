@@ -3,130 +3,112 @@ namespace B23_Ex02_Ariel_315363366_Adi_206820045
 {
     class UserInterface
     {
-        public static int GetGridSize()
-        {
-            int gridSize = 0;
-            string gridSizeInput;
-            bool isValidGridSizeInput = false;
+        private GameController m_GameController;
 
-            gridSizeInput = ConsoleInterface.GetGridSize();
-            while (!isValidGridSizeInput)
+        public void StartGamesSession()
+        {
+            bool shouldPlayAnotherRound = true;
+            int gridSize = UserInputUtils.GetGridSize();
+            eGameModes gameMode = UserInputUtils.GetGameMode();
+
+            this.m_GameController = new GameController(gameMode);
+            while (shouldPlayAnotherRound)
             {
-                if (int.TryParse(gridSizeInput, out gridSize) && gridSize >= 3 && gridSize <= 9)
-                {
-                    isValidGridSizeInput = true;
-                }
-                else
-                {
-                    gridSizeInput = ConsoleInterface.GetGridSizeWhenInvalid();
-                }
+                this.startGame(gridSize);
+                shouldPlayAnotherRound = UserInputUtils.GetWhetherToPlayAnotherRound();
             }
 
-            return gridSize;
+            ConsoleUtils.WaitForUserInput();
         }
 
-        public static eGameMode GetGameMode()
+        private bool startGame(int i_GrideSize)
         {
-            string gameModeInput;
-            eGameMode gameMode = eGameMode.AgainstComputer;
-            bool isValidGameModeInput = false;
+            this.m_GameController.InitNewGame(i_GrideSize);
 
-            gameModeInput = ConsoleInterface.GetGameMode();
-            while (!isValidGameModeInput)
-            {
-                if (Enum.TryParse(gameModeInput, out gameMode))
-                {
-                    isValidGameModeInput = true;
-                }
-                else
-                {
-                    gameModeInput = ConsoleInterface.GetGameModeWhenInvalid();
-                }
-            }
-
-            return gameMode;
+            return this.playGame(i_GrideSize);
         }
 
-        public static int[] GetPlayerNextMove(int i_GridSize)
+        private bool playGame(int i_GrideSize)
         {
-            int x = 0;
-            int y = 0;
-            int[] result = null;
+            bool isVictory = false;
+            int[] nextMove;
+            bool isQuit = false;
 
-            ConsoleInterface.GetLineNumber();
-            x = getCellIndex(i_GridSize);
-            if(x == -1)
+            ConsoleUtils.ShowGameGrid(this.m_GameController.GetGrid());
+            while (!isVictory && this.m_GameController.GetLeftoverMovesCount() > 0 && !isQuit)
             {
-                result = new int[] { x };
+                nextMove = getNextPlayerMove(this.m_GameController.GetActivePlayer().Type, i_GrideSize);
+                isQuit = this.shouldQuit(nextMove);
+                if (!isQuit)
+                {
+                    this.m_GameController.ApplyNextMove(nextMove);
+                    isVictory = this.m_GameController.IsVictory();
+                    ConsoleUtils.ShowGameGrid(this.m_GameController.GetGrid());
+                    if (!isVictory)
+                    {
+                        this.m_GameController.SetNextActivePlayer();
+                    }
+                }
             }
-            else {
-                ConsoleInterface.GetColumnNumber();
-                y = getCellIndex(i_GridSize);
-                if (y == -1)
-                {
-                    result = new int[] { y };
-                } 
-                else
-                {
-                    result = new int[] { x - 1, y - 1 };
-                } 
-            } 
 
-            return result;
+            if (!isQuit)
+            {
+                this.handleEndGame(isVictory);
+            }
+
+            return isQuit;
         }
 
-        private static int getCellIndex (int i_GridSize) {
-            bool isValidInputValue = false;
-            string inputValue;
-            int cellIndex = 0;
-
-            inputValue = ConsoleInterface.GetCellIndex();
-            while (!isValidInputValue)
-            {
-                if(inputValue.Equals(ConsoleInterface.k_QuitSign))
-                {
-                    isValidInputValue = true;
-                    cellIndex = -1;
-                }
-                else if (int.TryParse(inputValue, out cellIndex))
-                {
-                    isValidInputValue = true;
-                }
-                else
-                {
-                    inputValue = ConsoleInterface.GetCellIndexWhenInvalid(i_GridSize);
-                }
-            }
-
-            return cellIndex;
+        private bool shouldQuit(int[] i_PlayerNextMove)
+        {
+            return i_PlayerNextMove == null;
         }
 
-        public static bool GetWhetherToPlayAnotherRound()
+        private int[] getNextPlayerMove(ePlayerTypes i_CurrenctPlayerType, int i_GrideSize)
         {
-            bool isValidAnotherRoundInput = false;
-            string shouldPlayAnotherRoundInput;
-            bool shouldPlayAnotherRound = false;
+            bool isNextMoveValid = false;
+            int[] nextMove = null;
 
-            shouldPlayAnotherRoundInput = ConsoleInterface.GetWhetherToPlayAnotherRound();
-            while (!isValidAnotherRoundInput)
+            while (!isNextMoveValid)
             {
-                if (shouldPlayAnotherRoundInput.Equals(ConsoleInterface.k_YesSign))
+                if (i_CurrenctPlayerType == ePlayerTypes.Person)
                 {
-                    shouldPlayAnotherRound = true;
-                    isValidAnotherRoundInput = true;
-                }
-                else if (shouldPlayAnotherRoundInput.Equals(ConsoleInterface.k_NoSign))
-                {
-                    shouldPlayAnotherRound = false;
-                    isValidAnotherRoundInput = true;
+                    nextMove = UserInputUtils.GetPlayerNextMove(i_GrideSize);
                 }
                 else
                 {
-                    shouldPlayAnotherRoundInput = ConsoleInterface.GetWhetherToPlayAnotherRoundWhenInvalid();
+                    nextMove = this.m_GameController.GetComputerNextMove();
+                }
+
+                if (nextMove == null || this.m_GameController.IsNextMoveValid(nextMove))
+                {
+                    isNextMoveValid = true;
+                }
+                else
+                {
+                    ConsoleUtils.ShowMessageWhenInvalidCellIndex(i_GrideSize);
                 }
             }
 
-            return shouldPlayAnotherRound;
+            return nextMove;
+        }
+
+        private void handleEndGame(bool i_IsVictory)
+        {
+            if (this.m_GameController.GetLeftoverMovesCount() == 0)
+            {
+                ConsoleUtils.ShowMessageWhenGameOverWithTie();
+                ConsoleUtils.ShowMessageWithPlayersScore(this.m_GameController.Players);
+            }
+
+            if (i_IsVictory)
+            {
+                ConsoleUtils.ShowGameGrid(this.m_GameController.GetGrid());
+                this.m_GameController.SetNextActivePlayer();
+                this.m_GameController.GetActivePlayer().Score++;
+                ConsoleUtils.ShowMessageWhenGameOverWithWin(this.m_GameController.GetActivePlayer().Mark);
+                ConsoleUtils.ShowMessageWithPlayersScore(this.m_GameController.Players);
+            }
         }
     }
 }
