@@ -1,7 +1,7 @@
 ﻿using System;
 namespace B23_Ex02_Ariel_315363366_Adi_206820045
 {
-    class UserInterface
+    public class UserInterface
     {
         private GameController m_GameController;
 

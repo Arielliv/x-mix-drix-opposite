@@ -3,7 +3,7 @@ using Ex02.ConsoleUtils;
 
 namespace B23_Ex02_Ariel_315363366_Adi_206820045
 {
-    class ConsoleUtils
+    public class ConsoleUtils
     {
         public const string k_QuitSign = "Q";
         public const string k_YesSign = "y";

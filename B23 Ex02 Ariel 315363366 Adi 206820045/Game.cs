@@ -8,7 +8,7 @@ namespace B23_Ex02_Ariel_315363366_Adi_206820045
         AgainstComputer
     }
 
-    class Game
+    public class Game
     {
         private readonly Grid r_Grid;
         private int m_LeftoverMovesCount;

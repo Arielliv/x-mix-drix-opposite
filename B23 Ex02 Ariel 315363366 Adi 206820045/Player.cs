@@ -6,7 +6,7 @@
         Person
     }
 
-    class Player
+    public class Player
     {
         private ePlayerTypes m_Type;
         private eMarks m_Mark;
